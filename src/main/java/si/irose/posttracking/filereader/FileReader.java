@@ -11,11 +11,8 @@ import java.util.stream.Collectors;
 
 public class FileReader {
 
-    public List<File> getFileList() throws URISyntaxException, IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL resource = classLoader.getResource("data");
-
-        return Files.walk(Paths.get(resource.toURI()))
+    public List<File> getFileList(String path) throws URISyntaxException, IOException {
+        return Files.walk(Paths.get(path))
                 .filter(Files::isRegularFile)
                 .map(x -> x.toFile())
                 .collect(Collectors.toList());

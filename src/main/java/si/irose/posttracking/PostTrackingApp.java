@@ -18,13 +18,17 @@ import java.util.stream.Collectors;
 public class PostTrackingApp {
 
     public static void main(String[] args) throws URISyntaxException, IOException {
+
+        System.out.println(args.length);
+        System.out.println(args[0]);
+
         final FileReader fileReader = new FileReader();
         final FileDataReader fileDataReader = new FileDataReader();
         final DataParser dataParser = new DataParser();
 
         Map<LocalDate, Set<String>> finalMap = new HashMap<>();
 
-        List<File> result = fileReader.getFileList();
+        List<File> result = fileReader.getFileList(args[0]);
         List<String> stringList = fileDataReader.parseData(result);
         dataParser.processData(stringList);
         List<Address> addressList = dataParser.getAddressList();
