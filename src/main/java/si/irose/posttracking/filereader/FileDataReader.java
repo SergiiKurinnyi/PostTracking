@@ -1,6 +1,7 @@
-package si.irose.posttracking.filedatareader;
+package si.irose.posttracking.filereader;
 
 import java.io.*;
+import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.List;
 

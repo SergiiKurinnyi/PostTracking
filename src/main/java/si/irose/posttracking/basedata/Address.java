@@ -1,4 +1,4 @@
-package si.irose.posttracking.address;
+package si.irose.posttracking.basedata;
 
 public class Address {
 
@@ -22,29 +22,12 @@ public class Address {
         return id;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public int getHs() {
-        return hs;
-    }
-
-    public char getHd() {
-        return hd;
-    }
-
-    public int getPost_id() {
-        return post_id;
-    }
-
     @Override
     public String toString() {
-        return city + ", " + street + ", " + hs + "," + hd + ", " + post_id;
+        if (hd == ' ') {
+            return city + ", " + street + ", " + hs + ", " + post_id;
+        }
+        return city + ", " + street + ", " + hs + hd + ", " + post_id;
     }
 
 }

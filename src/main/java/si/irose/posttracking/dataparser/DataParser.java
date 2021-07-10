@@ -2,9 +2,9 @@ package si.irose.posttracking.dataparser;
 
 import static java.lang.Integer.parseInt;
 
-import si.irose.posttracking.address.Address;
-import si.irose.posttracking.post.Post;
-import si.irose.posttracking.trackinglog.TrackingLog;
+import si.irose.posttracking.basedata.Address;
+import si.irose.posttracking.basedata.Post;
+import si.irose.posttracking.basedata.TrackingLog;
 
 import java.sql.Timestamp;
 import java.util.LinkedList;
@@ -12,9 +12,9 @@ import java.util.List;
 
 public class DataParser {
 
-    private List<Post> postList = new LinkedList<>();
-    private List<Address> addressList = new LinkedList<>();
-    private List<TrackingLog> trackingLogs = new LinkedList<>();
+    private final List<Post> postList = new LinkedList<>();
+    private final List<Address> addressList = new LinkedList<>();
+    private final List<TrackingLog> trackingLogs = new LinkedList<>();
 
     public List<Post> getPostList() {
         return postList;
@@ -28,24 +28,24 @@ public class DataParser {
         return trackingLogs;
     }
 
-    public void processData(List<String> stringList) {
-        for (String string : stringList) {
-            String[] lines = string.split(",");
-            allocateData(lines);
+    public void processData(List<String> lines) {
+        for (String string : lines) {
+            String[] linesArray = string.split(",");
+            allocateData(linesArray);
         }
     }
 
-    private void allocateData(String[] lines) {
+    private void allocateData(String[] linesArray) {
         try {
-            if (lines.length == 2) {
-                postList.add(new Post(parseInt(lines[0]), lines[1]));
-            } else if (lines.length == 3) {
-                trackingLogs.add(new TrackingLog(parseInt(lines[0]), parseInt(lines[1]), Timestamp.valueOf(lines[2])));
-            } else if (lines.length == 6) {
-                char houseDetails = lines[4].length() > 0 ? lines[4].charAt(0) : ' ';
+            if (linesArray.length == 2) {
+                postList.add(new Post(parseInt(linesArray[0]), linesArray[1]));
+            } else if (linesArray.length == 3) {
+                trackingLogs.add(new TrackingLog(parseInt(linesArray[0]), parseInt(linesArray[1]), Timestamp.valueOf(linesArray[2])));
+            } else if (linesArray.length == 6) {
+                char houseDetails = linesArray[4].length() > 0 ? linesArray[4].charAt(0) : ' ';
                 addressList.add(new Address(
-                        parseInt(lines[0]), lines[1], lines[2], parseInt(lines[3]), houseDetails,
-                        parseInt(lines[5])));
+                        parseInt(linesArray[0]), linesArray[1], linesArray[2], parseInt(linesArray[3]), houseDetails,
+                        parseInt(linesArray[5])));
             }
         } catch (NumberFormatException e) {
             System.out.println("Error parsing numbers from file");
