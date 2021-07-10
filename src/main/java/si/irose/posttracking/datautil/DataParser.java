@@ -1,4 +1,4 @@
-package si.irose.posttracking.dataparser;
+package si.irose.posttracking.datautil;
 
 import static java.lang.Integer.parseInt;
 
@@ -28,7 +28,7 @@ public class DataParser {
         return trackingLogs;
     }
 
-    public void processData(List<String> lines) {
+    public void parseData(List<String> lines) {
         for (String string : lines) {
             String[] linesArray = string.split(",");
             allocateData(linesArray);

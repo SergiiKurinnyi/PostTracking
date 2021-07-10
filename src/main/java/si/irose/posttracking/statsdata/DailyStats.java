@@ -1,4 +1,4 @@
-package si.irose.posttracking.report;
+package si.irose.posttracking.statsdata;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -7,9 +7,6 @@ public class DailyStats {
 
     private LocalDate day;
     private List<AddressStats> records;
-
-    public DailyStats() {
-    }
 
     public DailyStats(LocalDate day, List<AddressStats> records) {
         this.day = day;
@@ -28,4 +25,5 @@ public class DailyStats {
     public String toString() {
         return day + "\r\n" + records;
     }
+
 }

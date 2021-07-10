@@ -14,10 +14,6 @@ public class TrackingLog {
         this.detectedDate = detectedDate;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public int getAddressId() {
         return addressId;
     }

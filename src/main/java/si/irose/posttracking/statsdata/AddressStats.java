@@ -1,4 +1,4 @@
-package si.irose.posttracking.report;
+package si.irose.posttracking.statsdata;
 
 import si.irose.posttracking.basedata.Address;
 
@@ -24,13 +24,28 @@ public class AddressStats {
         this.recordCount = recordCount;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
     public LocalDate getDay() {
         return day;
     }
 
-    @Override
-    public String toString() {
-        return address + " " + postName +" | " + arrival + " | " + departure + " | records: " + recordCount + "\r\n";
+    public String getPostName() {
+        return postName;
+    }
+
+    public LocalTime getArrival() {
+        return arrival;
+    }
+
+    public LocalTime getDeparture() {
+        return departure;
+    }
+
+    public int getRecordCount() {
+        return recordCount;
     }
 
     @Override
@@ -38,7 +53,10 @@ public class AddressStats {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AddressStats that = (AddressStats) o;
-        return recordCount == that.recordCount && Objects.equals(address, that.address) && Objects.equals(day, that.day) && Objects.equals(arrival, that.arrival) && Objects.equals(departure, that.departure);
+        return recordCount == that.recordCount && Objects.equals(address, that.address)
+                && Objects.equals(day, that.day)
+                && Objects.equals(arrival, that.arrival)
+                && Objects.equals(departure, that.departure);
     }
 
     @Override

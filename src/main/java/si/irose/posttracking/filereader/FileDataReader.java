@@ -7,13 +7,12 @@ import java.util.List;
 
 public class FileDataReader {
 
-    public List<String> parseData(List<File> fileList) {
+    public List<String> readFile(List<File> fileList) {
         List<String> fileLinesList = new LinkedList<>();
 
         for (File file : fileList) {
-            try {
-                String line;
-                BufferedReader bf = new BufferedReader(new FileReader(file));
+            String line;
+            try (BufferedReader bf = new BufferedReader(new FileReader(file))) {
                 while ((line = bf.readLine()) != null) {
                     fileLinesList.add(line);
                 }

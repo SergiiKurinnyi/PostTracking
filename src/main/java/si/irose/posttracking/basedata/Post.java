@@ -10,10 +10,6 @@ public class Post {
         this.post = post;
     }
 
-    public int getPostId() {
-        return postId;
-    }
-
     public String getPost() {
         return post;
     }
