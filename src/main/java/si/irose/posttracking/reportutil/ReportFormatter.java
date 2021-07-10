@@ -3,6 +3,7 @@ package si.irose.posttracking.reportutil;
 import si.irose.posttracking.statsdata.AddressStats;
 import si.irose.posttracking.statsdata.DailyStats;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -11,15 +12,22 @@ public class ReportFormatter {
 
     public String formatReport(List<DailyStats> dailyStatsList) {
         StringBuilder sb = new StringBuilder();
-        int addressMaxLength = getAddressMaxLength(dailyStatsList) + 1;
-        String lineDelimiter = String.format("%" + (addressMaxLength + 36) + "s\n", " ").replaceAll(" ", "_");
-        String recordFormat = "s | %s | %s | records: %s \n";
+        int addressMaxLength = getAddressMaxLength(dailyStatsList);
+        String lineDelimiter = String.format("%" + (addressMaxLength + 39) + "s\n", " ").replaceAll(" ", "_");
+        String recordFormat = "s \t | %s | records: %s \n";
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+        String duration;
 
         for (DailyStats stat : dailyStatsList) {
             sb.append(lineDelimiter).append(stat.getDay().toString()).append("\r\n");
             for (AddressStats stats : stat.getRecords()) {
+                if (stats.getRecordCount() == 1) {
+                    duration = String.format("%14s %4s", stats.getArrival().format(timeFormat), " ");
+                } else duration =
+                        stats.getArrival().format(timeFormat) + " - " + stats.getDeparture().format(timeFormat);
+
                 sb.append(String.format("%-" + addressMaxLength + recordFormat, stats.getAddress() + " "
-                        + stats.getPostName(), stats.getArrival(), stats.getDeparture(), stats.getRecordCount()));
+                        + stats.getPostName(), duration, stats.getRecordCount()));
             }
         }
         sb.append(lineDelimiter);

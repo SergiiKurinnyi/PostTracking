@@ -22,4 +22,8 @@ public class TrackingLog {
         return detectedDate;
     }
 
+    @Override
+    public String toString() {
+        return "id=" + id + ", addressId=" + addressId + ", detectedDate=" + detectedDate + "\r\n";
+    }
 }
