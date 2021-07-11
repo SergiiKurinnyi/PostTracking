@@ -8,20 +8,23 @@ import java.util.List;
 public class FileDataReader {
 
     public List<String> readFile(List<File> fileList) {
-        List<String> fileLinesList = new LinkedList<>();
+        List<String> allFilesLines = new LinkedList<>();
 
         for (File file : fileList) {
             String line;
             try (BufferedReader bf = new BufferedReader(new FileReader(file))) {
                 while ((line = bf.readLine()) != null) {
-                    fileLinesList.add(line);
+                    allFilesLines.add(line);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        if (allFilesLines.isEmpty()) {
+            throw new IllegalStateException("Nothing to read. File(s) might be empty.");
+        }
 
-        return fileLinesList;
+        return allFilesLines;
     }
 
 }

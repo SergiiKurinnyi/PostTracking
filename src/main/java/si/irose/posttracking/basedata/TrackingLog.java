@@ -1,6 +1,7 @@
 package si.irose.posttracking.basedata;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class TrackingLog {
 
@@ -23,7 +24,16 @@ public class TrackingLog {
     }
 
     @Override
-    public String toString() {
-        return "id=" + id + ", addressId=" + addressId + ", detectedDate=" + detectedDate + "\r\n";
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TrackingLog that = (TrackingLog) o;
+        return id == that.id && getAddressId() == that.getAddressId() && Objects.equals(getDetectedDate(), that.getDetectedDate());
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, getAddressId(), getDetectedDate());
+    }
+
 }

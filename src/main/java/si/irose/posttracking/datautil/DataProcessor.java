@@ -1,7 +1,6 @@
 package si.irose.posttracking.datautil;
 
 import si.irose.posttracking.basedata.Address;
-import si.irose.posttracking.basedata.Post;
 import si.irose.posttracking.basedata.TrackingLog;
 import si.irose.posttracking.filereader.FileDataReader;
 import si.irose.posttracking.filereader.FileReader;
@@ -26,45 +25,55 @@ public class DataProcessor {
         List<File> fileList = fileReader.getFileList(folderName);
         List<String> allFilesLines = fileDataReader.readFile(fileList);
         dataParser.parseData(allFilesLines);
-        List<Address> addressList = dataParser.getAddressList();
         List<TrackingLog> trackingLogs = dataParser.getTrackingLogs();
-        List<Post> postList = dataParser.getPostList();
+        Map<Integer, Address> idToAddressMap = dataParser.getIdToAddressMap();
+        Map<Integer, String> idToPostMap = dataParser.getIdToPostMap();
+        Set<AddressStats> addressStats = initAddressStats(trackingLogs, idToAddressMap, idToPostMap);
+
+        return getDailyStats(addressStats);
+    }
+
+    private Set<AddressStats> initAddressStats(
+            List<TrackingLog> trackingLogs, Map<Integer, Address> addressMap, Map<Integer, String> posts) {
         Set<AddressStats> addressStats = new HashSet<>();
 
         for (TrackingLog log : trackingLogs) {
             addressStats.add(new AddressStats(
-                    findAddressById(addressList, log.getAddressId()),
-                    findPostById(log, postList),
+                    getFullAddress(log, addressMap, posts),
                     log.getDetectedDate().toLocalDateTime().toLocalDate(),
                     getArrivalTime(trackingLogs, log.getDetectedDate(), log.getAddressId()),
                     getDepartureTime(trackingLogs, log.getDetectedDate(), log.getAddressId()),
                     countAddressRecords(trackingLogs, log.getDetectedDate(), log.getAddressId())));
         }
 
-        return getDailyStats(new LinkedList<>(addressStats));
+        return addressStats;
     }
 
-    //Probably there are options to optimize - without intermediate Map
-    private List<DailyStats> getDailyStats(List<AddressStats> addressStats) {
+    private String getFullAddress(TrackingLog log, Map<Integer, Address> addressMap, Map<Integer, String> posts) {
+        StringBuilder fullAddress = new StringBuilder();
+        Address currentAddress = addressMap.get(log.getAddressId());
+
+        fullAddress.append(currentAddress.getCity()).append(", ");
+        fullAddress.append(currentAddress.getStreet()).append(", ");
+        fullAddress.append(currentAddress.getHouseNumber());
+        if (currentAddress.getHouseDetails() != ' ') {
+            fullAddress.append(currentAddress.getHouseDetails()).append(", ");
+        } else fullAddress.append(", ");
+        fullAddress.append(currentAddress.getPostId()).append(" ");
+        fullAddress.append(posts.get(currentAddress.getPostId()));
+
+        return fullAddress.toString();
+    }
+
+    private List<DailyStats> getDailyStats(Set<AddressStats> addressStats) {
         Map<LocalDate, List<AddressStats>> result = addressStats.stream()
                 .collect(Collectors.groupingBy(AddressStats::getDay));
 
-        List<DailyStats> dailyStatsList = new LinkedList<>();
-        result.forEach((k,v) -> dailyStatsList.add(new DailyStats(k,v)));
+        List<DailyStats> dailyStats = new LinkedList<>();
+        result.forEach((k, v) -> dailyStats.add(new DailyStats(k, v)));
+        dailyStats.sort(Comparator.comparing(DailyStats::getDay).reversed());
 
-        return dailyStatsList;
-    }
-
-    private Address findAddressById(List<Address> addressList, int addressId) {
-        Optional<Address> result = addressList.stream()
-                .filter(x -> x.getId() == addressId)
-                .findFirst();
-
-        return result.get();
-    }
-
-    private String findPostById(TrackingLog log, List<Post> postList) {
-        return postList.get(log.getAddressId()).getPost();
+        return dailyStats;
     }
 
     private LocalTime getArrivalTime(List<TrackingLog> trackingLogs, Timestamp timestamp, int addressId) {

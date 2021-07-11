@@ -3,25 +3,26 @@ package si.irose.posttracking.datautil;
 import static java.lang.Integer.parseInt;
 
 import si.irose.posttracking.basedata.Address;
-import si.irose.posttracking.basedata.Post;
 import si.irose.posttracking.basedata.TrackingLog;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class DataParser {
 
-    private final List<Post> postList = new LinkedList<>();
-    private final List<Address> addressList = new LinkedList<>();
+    private final Map<Integer, String> idToPost = new HashMap<>();
+    private final Map<Integer, Address> idToAddress = new HashMap<>();
     private final List<TrackingLog> trackingLogs = new LinkedList<>();
 
-    public List<Post> getPostList() {
-        return postList;
+    public Map<Integer, String> getIdToPostMap() {
+        return idToPost;
     }
 
-    public List<Address> getAddressList() {
-        return addressList;
+    public Map<Integer, Address> getIdToAddressMap() {
+        return idToAddress;
     }
 
     public List<TrackingLog> getTrackingLogs() {
@@ -38,17 +39,17 @@ public class DataParser {
     private void allocateData(String[] linesArray) {
         try {
             if (linesArray.length == 2) {
-                postList.add(new Post(parseInt(linesArray[0]), linesArray[1]));
+                idToPost.put(parseInt(linesArray[0]), linesArray[1]);
             } else if (linesArray.length == 3) {
                 trackingLogs.add(new TrackingLog(parseInt(linesArray[0]), parseInt(linesArray[1]), Timestamp.valueOf(linesArray[2])));
             } else if (linesArray.length == 6) {
                 char houseDetails = linesArray[4].length() > 0 ? linesArray[4].charAt(0) : ' ';
-                addressList.add(new Address(
+                idToAddress.put(parseInt(linesArray[0]), new Address(
                         parseInt(linesArray[0]), linesArray[1], linesArray[2], parseInt(linesArray[3]), houseDetails,
                         parseInt(linesArray[5])));
             }
         } catch (NumberFormatException e) {
-            System.out.println("Error parsing numbers from file");
+            System.out.println("Error parsing  file. Please check file contents structure.");
             e.printStackTrace();
         }
     }

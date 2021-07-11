@@ -21,9 +21,4 @@ public class DailyStats {
         return records;
     }
 
-    @Override
-    public String toString() {
-        return day + "\r\n" + records;
-    }
-
 }
