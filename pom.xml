@@ -6,19 +6,14 @@
 
     <groupId>si.irose.posttracking</groupId>
     <artifactId>post-tracking</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>Post tracking program</name>
     <description>Program that generates tracking report based on datafiles</description>
 
     <properties>
-        <maven-compiler-plugin>3.8.1</maven-compiler-plugin>
-        <maven-jar-plugin>3.1.2</maven-jar-plugin>
-        <maven-surefire-plugin>2.22.2</maven-surefire-plugin>
-        <junit.jupiter.engine.version>5.7.2</junit.jupiter.engine.version>
-        <jacoco.version>0.8.7</jacoco.version>
-        <junit-platform-surefire-provider>1.3.2</junit-platform-surefire-provider>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <junit.jupiter.engine.version>5.7.0</junit.jupiter.engine.version>
+        <jacoco.version>0.8.6</jacoco.version>
+        <argLine>-Dfile.encoding=UTF-8</argLine>
     </properties>
 
     <dependencies>
@@ -29,14 +24,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>${jacoco.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>
-            <version>${maven-jar-plugin}</version>
+            <version>3.1.2</version>
         </dependency>
     </dependencies>
 
@@ -44,7 +34,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin}</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -53,7 +43,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin}</version>
+                <version>3.1.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -65,15 +55,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
                 <configuration>
-                    <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
-                <version>${maven-surefire-plugin}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>
                         <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>${junit-platform-surefire-provider}</version>
+                        <version>1.2.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
