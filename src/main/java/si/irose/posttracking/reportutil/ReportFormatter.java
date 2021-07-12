@@ -11,12 +11,12 @@ import java.util.Optional;
 public class ReportFormatter {
 
     private final static DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("hh:mm:ss");
-    private final static String RECORD_FORMAT = "s \t | %s | records: %s \n";
+    private final static String RECORD_FORMAT = "s \t | %s | records: %s \r\n";
 
     public String formatReport(List<DailyStats> dailyStatsList) {
         StringBuilder report = new StringBuilder();
         int addressMaxLength = getAddressMaxLength(dailyStatsList) + 1;
-        String lineDelimiter = String.format("%" + (addressMaxLength + 42) + "s\n", " ").replaceAll(" ", "_");
+        String lineDelimiter = String.format("%" + (addressMaxLength + 42) + "s\r\n", " ").replaceAll(" ", "_");
         String duration;
 
         for (DailyStats dayStats : dailyStatsList) {

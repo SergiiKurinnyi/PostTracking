@@ -1,24 +1,30 @@
 package si.irose.posttracking.filereader;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileReader {
 
-    public List<File> getFileList(String path) throws IOException {
-        List<File> files = Files.walk(Paths.get(path))
-                .filter(Files::isRegularFile)
-                .map(Path::toFile)
-                .collect(Collectors.toList());
+    public List<Path> getFileList(String sourcePath) {
+        if (sourcePath == null || sourcePath.length() < 1) {
+            throw new IllegalArgumentException("No path to file(s). Please specify path to folder.");
+        }
 
+        List<Path> files = new LinkedList<>();
+        try (Stream<Path> walk = Files.walk(Paths.get(sourcePath))) {
+            files = walk.filter(Files::isRegularFile)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            System.out.println("File(s) not found. Please check path and folder contents.");
+        }
         if (files.isEmpty()) {
-            throw new FileNotFoundException("No files found at the specified folder.");
+            throw new IllegalStateException("File(s) not found. Please check path and folder contents.");
         }
 
         return files;

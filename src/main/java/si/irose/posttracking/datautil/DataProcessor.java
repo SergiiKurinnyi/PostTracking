@@ -7,8 +7,7 @@ import si.irose.posttracking.filereader.FileReader;
 import si.irose.posttracking.statsdata.AddressStats;
 import si.irose.posttracking.statsdata.DailyStats;
 
-import java.io.File;
-import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -21,8 +20,8 @@ public class DataProcessor {
     final FileDataReader fileDataReader = new FileDataReader();
     final DataParser dataParser = new DataParser();
 
-    public List<DailyStats> processData(String folderName) throws IOException {
-        List<File> fileList = fileReader.getFileList(folderName);
+    public List<DailyStats> processData(String sourcePath) {
+        List<Path> fileList = fileReader.getFileList(sourcePath);
         List<String> allFilesLines = fileDataReader.readFile(fileList);
         dataParser.parseData(allFilesLines);
         List<TrackingLog> trackingLogs = dataParser.getTrackingLogs();

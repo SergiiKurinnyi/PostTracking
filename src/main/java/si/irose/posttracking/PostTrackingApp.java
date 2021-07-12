@@ -4,13 +4,12 @@ import si.irose.posttracking.datautil.DataProcessor;
 import si.irose.posttracking.reportutil.ReportFormatter;
 import si.irose.posttracking.statsdata.DailyStats;
 
-import java.io.IOException;
 import java.util.List;
 
 public class PostTrackingApp {
 
-    public static void main(String[] args) throws IOException {
-        if (args.length < 1 || args[0] == null) {
+    public static void main(String[] args) {
+        if (args.length < 1) {
             throw new IllegalArgumentException("Please, specify folder that contains data files. " +
                     "Check ReadMe file for details");
         }

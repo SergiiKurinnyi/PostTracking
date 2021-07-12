@@ -34,6 +34,10 @@ public class DataParser {
             String[] linesArray = string.split(",");
             allocateData(linesArray);
         }
+
+        if (idToPost.isEmpty() || idToAddress.isEmpty() || trackingLogs.isEmpty()) {
+            throw new IllegalStateException("Not enough data for report. Please check file(s) content.");
+        }
     }
 
     private void allocateData(String[] linesArray) {
@@ -49,8 +53,7 @@ public class DataParser {
                         parseInt(linesArray[5])));
             }
         } catch (NumberFormatException e) {
-            System.out.println("Error parsing  file. Please check file contents structure.");
-            e.printStackTrace();
+            throw new NumberFormatException("Error parsing data. Please check file(s) contents.");
         }
     }
 
