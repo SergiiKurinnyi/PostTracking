@@ -17,34 +17,6 @@ public class DataParserTest {
 
     private final DataParser dataParser = new DataParser();
 
-//    @Test
-//    void parseData_ShouldParsePostDataToCollections_IfFilesContainProperData() {
-//        Map<Integer, String> expectedIdToPost = new HashMap<>();
-//        expectedIdToPost.put(1000, "Ljubljana");
-//        expectedIdToPost.put(3000, "Celje");
-//
-//        Map<Integer, Address> expectedItToAddress = new HashMap<>();
-//        expectedItToAddress.put(1, new Address(
-//                1, "Ljubljana", "Slovenčeva ulica", 19, 'a', 1000));
-//        expectedItToAddress.put(2, new Address(2, "Celje", "Gosposka", 1, ' ', 3000));
-//
-//        List<TrackingLog> expectedTrackingLog = new LinkedList<>();
-//        expectedTrackingLog.add(new TrackingLog(1, 1, Timestamp.valueOf("2010-06-01 10:00:13")));
-//        expectedTrackingLog.add(new TrackingLog(2, 1, Timestamp.valueOf("2010-06-01 10:00:18")));
-//
-//        testArgument.add("1000,Ljubljana");
-//        testArgument.add("3000,Celje");
-//        testArgument.add("1,Ljubljana,Slovenčeva ulica,19,a,1000");
-//        testArgument.add("2,Celje,Gosposka,1,,3000");
-//        testArgument.add("1,1,2010-06-01 10:00:13");
-//        testArgument.add("2,1,2010-06-01 10:00:18");
-//        dataParser.parseData(testArgument);
-//
-//        assertEquals(expectedIdToPost, dataParser.getIdToPostMap());
-//        assertEquals(expectedItToAddress, dataParser.getIdToAddressMap());
-//        assertEquals(expectedTrackingLog, dataParser.getTrackingLogs());
-//    }
-
     @Test
     void parseData_ShouldParsePostDataToMap_IfFilesContainProperData() {
         Map<Integer, String> expected = new HashMap<>();
@@ -59,7 +31,6 @@ public class DataParserTest {
         dataParser.parseData(testArgument);
 
         assertEquals(expected, dataParser.getIdToPostMap());
-
     }
 
     @Test

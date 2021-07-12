@@ -13,9 +13,6 @@ public class FileDataReaderTest {
 
     private final FileDataReader fileDataReader = new FileDataReader();
 
-    public FileDataReaderTest() {
-    }
-
     @Test
     void readFile_ShouldThrowIllegalArgumentException_IfArgumentIsEmpty() {
         List<Path> testArgument = new LinkedList<>();
