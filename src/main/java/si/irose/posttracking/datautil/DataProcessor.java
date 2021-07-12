@@ -1,5 +1,7 @@
 package si.irose.posttracking.datautil;
 
+import static java.util.Comparator.comparing;
+
 import si.irose.posttracking.basedata.Address;
 import si.irose.posttracking.basedata.TrackingLog;
 import si.irose.posttracking.filereader.FileDataReader;
@@ -70,7 +72,7 @@ public class DataProcessor {
 
         List<DailyStats> dailyStats = new LinkedList<>();
         result.forEach((k, v) -> dailyStats.add(new DailyStats(k, v)));
-        dailyStats.sort(Comparator.comparing(DailyStats::getDay).reversed());
+        dailyStats.sort(comparing(DailyStats::getDay).reversed());
 
         return dailyStats;
     }
@@ -80,7 +82,7 @@ public class DataProcessor {
         Optional<TrackingLog> min = trackingLogs.stream()
                 .filter(x -> x.getDetectedDate().toLocalDateTime().toLocalDate().equals(day))
                 .filter(y -> y.getAddressId() == addressId)
-                .min(Comparator.comparing(z -> z.getDetectedDate().toLocalDateTime().toLocalTime()));
+                .min(comparing(z -> z.getDetectedDate().toLocalDateTime().toLocalTime()));
 
         return min.get().getDetectedDate().toLocalDateTime().toLocalTime();
     }
@@ -90,7 +92,7 @@ public class DataProcessor {
         Optional<TrackingLog> max = trackingLogs.stream()
                 .filter(x -> x.getDetectedDate().toLocalDateTime().toLocalDate().equals(day))
                 .filter(y -> y.getAddressId() == address_id)
-                .max(Comparator.comparing(z -> z.getDetectedDate().toLocalDateTime().toLocalTime()));
+                .max(comparing(z -> z.getDetectedDate().toLocalDateTime().toLocalTime()));
 
         return max.get().getDetectedDate().toLocalDateTime().toLocalTime();
     }

@@ -16,8 +16,8 @@ public class FileDataReader {
 
         for (Path file : fileList) {
             String line;
-            try (BufferedReader bf = new BufferedReader(new FileReader(file.toFile()))) {
-                while ((line = bf.readLine()) != null) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file.toFile()))) {
+                while ((line = reader.readLine()) != null) {
                     allFilesLines.add(line);
                 }
             } catch (IOException e) {

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import si.irose.posttracking.statsdata.AddressStats;
 import si.irose.posttracking.statsdata.DailyStats;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
@@ -15,7 +16,7 @@ public class ReportFormatterTest {
     private final ReportFormatter reportFormatter = new ReportFormatter();
 
     @Test
-    void formatReport_ShouldFormatReport_IfMoreThanOneRecord () {
+    void formatReport_ShouldFormatReport_IfMoreThanOneRecord() {
         StringBuilder expected = new StringBuilder();
         expected.append("___________________________________________________________________________________________");
         expected.append("\r\n");
@@ -33,14 +34,14 @@ public class ReportFormatterTest {
         LocalTime departure = LocalTime.parse("10:00:24");
         int recordCount = 3;
         addressStats.add(new AddressStats(fullAddress, day, arrival, departure, recordCount));
-        testSource.add(new DailyStats(day,addressStats));
+        testSource.add(new DailyStats(day, addressStats));
         String actual = reportFormatter.formatReport(testSource);
 
         assertEquals(expected.toString(), actual);
     }
 
     @Test
-    void formatReport_ShouldFormatReport_IfNotMoreThanOneRecord () {
+    void formatReport_ShouldFormatReport_IfNotMoreThanOneRecord() {
         StringBuilder expected = new StringBuilder();
         expected.append("___________________________________________________________________________________________");
         expected.append("\r\n");
@@ -58,7 +59,7 @@ public class ReportFormatterTest {
         LocalTime departure = LocalTime.parse("10:00:13");
         int recordCount = 1;
         addressStats.add(new AddressStats(fullAddress, day, arrival, departure, recordCount));
-        testSource.add(new DailyStats(day,addressStats));
+        testSource.add(new DailyStats(day, addressStats));
         String actual = reportFormatter.formatReport(testSource);
 
         assertEquals(expected.toString(), actual);

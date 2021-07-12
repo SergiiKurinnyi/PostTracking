@@ -34,7 +34,6 @@ public class DataParser {
             String[] linesArray = string.split(",");
             allocateData(linesArray);
         }
-
         if (idToPost.isEmpty() || idToAddress.isEmpty() || trackingLogs.isEmpty()) {
             throw new IllegalStateException("Not enough data for report. Please check file(s) content.");
         }

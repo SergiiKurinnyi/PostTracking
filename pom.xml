@@ -11,9 +11,15 @@
     <description>Program that generates tracking report based on datafiles</description>
 
     <properties>
+        <argLine>-Dfile.encoding=UTF-8</argLine>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.java.version>1.8</project.java.version>
         <junit.jupiter.engine.version>5.7.0</junit.jupiter.engine.version>
         <jacoco.version>0.8.6</jacoco.version>
-        <argLine>-Dfile.encoding=UTF-8</argLine>
+        <maven.jar.plugin.version>3.1.2</maven.jar.plugin.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+        <junit.platform.surefire.provider.version>1.2.0</junit.platform.surefire.provider.version>
     </properties>
 
     <dependencies>
@@ -26,7 +32,7 @@
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>
-            <version>3.1.2</version>
+            <version>${maven.jar.plugin.version}</version>
         </dependency>
     </dependencies>
 
@@ -34,16 +40,16 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${project.java.version}</source>
+                    <target>${project.java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>${maven.jar.plugin.version}</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -55,14 +61,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>${maven.surefire.plugin.version}</version>
                 <configuration>
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>
                         <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.2.0</version>
+                        <version>${junit.platform.surefire.provider.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>

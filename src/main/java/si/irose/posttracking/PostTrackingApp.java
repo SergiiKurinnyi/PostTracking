@@ -13,7 +13,6 @@ public class PostTrackingApp {
             throw new IllegalArgumentException("Please, specify folder that contains data files. " +
                     "Check ReadMe file for details");
         }
-
         final DataProcessor dataProcessor = new DataProcessor();
         final ReportFormatter reportFormatter = new ReportFormatter();
 

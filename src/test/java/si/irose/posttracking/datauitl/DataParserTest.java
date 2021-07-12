@@ -67,7 +67,7 @@ public class DataParserTest {
     }
 
     @Test
-    void parseData_ShoulThrowIllegalStateException_IfDataIsCorrectButNotEnoughForReport() {
+    void parseData_ShouldThrowIllegalStateException_IfDataIsCorrectButNotEnoughForReport() {
         List<String> testArgument = new LinkedList<>();
         testArgument.add("123");
         testArgument.add("123,abc,efg,ijkl");
